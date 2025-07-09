@@ -5,7 +5,7 @@ import { schema } from "../../db/schema/index.ts";
 
 export const createQuestionRoute: FastifyPluginAsyncZod = async (app) => {
 	app.post(
-		"/:roomId/questions",
+		"/rooms/:roomId/questions",
 		{
 			schema: {
 				body: z.object({
