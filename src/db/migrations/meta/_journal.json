@@ -8,6 +8,13 @@
       "when": 1752081585944,
       "tag": "0000_fair_omega_flight",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752099419461,
+      "tag": "0001_perpetual_stick",
+      "breakpoints": true
     }
   ]
 }
