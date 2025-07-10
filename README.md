@@ -26,9 +26,9 @@ O objetivo principal é fornecer uma API RESTful para gerenciar salas, perguntas
 
 ## 🔗 Integrações
 
-A principal integração externa do projeto é com a **API do Google Gemini**.
+### API do Google Gemini
 
-### Como a Integração com Gemini é Utilizada
+#### Como a Integração com Gemini é Utilizada
 
 A API do Gemini é utilizada em três momentos cruciais do fluxo da aplicação, através do serviço `src/services/gemini.ts`:
 
@@ -43,6 +43,16 @@ A API do Gemini é utilizada em três momentos cruciais do fluxo da aplicação,
 3.  **Geração de Respostas (`generateAnswer`)**:
     -   **Modelo**: `gemini-1.5-flash`
     -   **Função**: Implementa o padrão RAG (Retrieval-Augmented Generation). A função recebe a pergunta do usuário e os trechos de texto mais relevantes (encontrados via busca de similaridade de embeddings) como contexto. Um prompt detalhado instrui o modelo a responder a pergunta **usando apenas as informações fornecidas no contexto**, garantindo que as respostas sejam fiéis ao conteúdo da "aula" (áudio).
+
+### Extensão de vetorização do PostgreSQL (pgvector)
+
+#### Como a extensão pgvector foi utilizada
+
+1.  **Armazenamento de Embeddings:**  
+  Cada transcrição de áudio ou pergunta é convertida em um vetor numérico (embedding) usando o Gemini. Esses vetores são salvos em uma coluna do tipo `vector` no PostgreSQL.
+
+2.  **Busca por Similaridade:**  
+  Quando o usuário faz uma pergunta, o texto é convertido em embedding e o PostgreSQL é usado para buscar, no banco, os vetores mais próximos (semelhantes) usando funções da extensão `vector` (como distância euclidiana ou cosseno). Isso permite encontrar rapidamente os trechos de texto mais relevantes para responder à pergunta.
 
 ## ⚙️ Como Executar o Projeto
 
@@ -87,6 +97,27 @@ A API do Gemini é utilizada em três momentos cruciais do fluxo da aplicação,
     ```
 
 O servidor estará disponível em `http://localhost:3333`.
+
+## Drizze Studio
+
+O projeto também está integrado com o **Drizzle Studio**, que uma interface gráfica para visualizar e gerenciar o banco de dados de forma prática durante o desenvolvimento. Ele permite explorar tabelas, consultar dados, editar registros e executar queries SQL diretamente, facilitando o debug e a validação do modelo de dados.
+
+### Como rodar o Drizzle Studio
+
+1. **Execute o comando:**
+    ```bash
+    npm run db:studio
+    ```
+
+2. O Drizzle Studio será iniciado e exibirá um link no terminal (geralmente `http://localhost:5555`). Acesse esse endereço no navegador para utilizar a interface.
+
+### Por que utilizar o Drizzle Studio?
+
+- Visualização rápida das tabelas e dados do banco.
+- Edição e inserção de registros sem necessidade de comandos SQL manuais.
+- Execução de queries customizadas para testes e validações.
+- Facilita o desenvolvimento, debug e manutenção do banco de dados.
+
 
 ## 🗺️ Endpoints da API
 
