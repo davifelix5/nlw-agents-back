@@ -4,25 +4,27 @@ import { schema } from "./schema/index.ts";
 
 await reset(db, schema);
 
-await seed(db, schema).refine((f) => {
-	return {
-		rooms: {
-			count: 5,
-			columns: {
-				name: f.companyName(),
-				description: f.loremIpsum({ sentencesCount: 10 }),
+await seed(db, { rooms: schema.rooms, questions: schema.questions }).refine(
+	(f) => {
+		return {
+			rooms: {
+				count: 5,
+				columns: {
+					name: f.companyName(),
+					description: f.loremIpsum({ sentencesCount: 10 }),
+				},
+				with: {
+					questions: 5,
+				},
 			},
-			with: {
-				questions: 5,
+			questions: {
+				columns: {
+					question: f.loremIpsum({ sentencesCount: 5 }),
+					answer: f.loremIpsum({ sentencesCount: 10 }),
+				},
 			},
-		},
-		questions: {
-			columns: {
-				question: f.loremIpsum({ sentencesCount: 5 }),
-				answer: f.loremIpsum({ sentencesCount: 10 }),
-			},
-		},
-	};
-});
+		};
+	},
+);
 
 await sql.end();
