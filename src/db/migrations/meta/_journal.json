@@ -15,6 +15,13 @@
       "when": 1752099419461,
       "tag": "0001_perpetual_stick",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752113776590,
+      "tag": "0002_complex_dormammu",
+      "breakpoints": true
     }
   ]
 }
